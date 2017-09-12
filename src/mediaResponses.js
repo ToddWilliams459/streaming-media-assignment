@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 
-function loadFile(request, response, file) {
+function loadFile(request, response, file, contentType) {
+
   fs.stat(file, (err, stats) => {
     if (err) {
       if (err.code === 'ENOENT') {
@@ -34,7 +35,7 @@ function loadFile(request, response, file) {
       'Content-Range': `bytes ${start}-${end}/${total}`,
       'Accept-Ranges': 'bytes',
       'Content-Length': chunksize,
-      'Content-Type': 'video/mp4',
+      'Content-Type': contentType,
     });
 
     const stream = fs.createReadStream(file, { start, end });
@@ -53,17 +54,19 @@ function loadFile(request, response, file) {
 
 const getParty = (request, response) => {
   const file = path.resolve(__dirname, '../client/party.mp4');
-  loadFile(request, response, file);
+  loadFile(request, response, file,'video/mp4');
 };
 
 const getBling = (request, response) => {
   const file = path.resolve(__dirname, '../client/bling.mp3');
-  loadFile(request, response, file);
-}
+  loadFile(request, response, file,'audio/mpeg');
+};
 
 const getBird = (request, response) => {
   const file = path.resolve(__dirname, '../client/bird.mp4');
-  loadFile(request, response, file);
-}
+  loadFile(request, response, file, 'video/mp4');
+};
 
 module.exports.getParty = getParty;
+module.exports.getBling = getBling;
+module.exports.getBird = getBird;
