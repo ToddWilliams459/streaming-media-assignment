@@ -2,7 +2,7 @@ const http = require('http');
 const htmlHandler = require('./htmlResponses.js');
 const mediaHandler = require('./mediaResponses.js');
 
-const port = process.env.PORT || process.env.NODE_PORT || 3001;
+const port = process.env.PORT || process.env.NODE_PORT || 3002;
 
 const onRequest = (request, response) => {
   console.log(request.url);
@@ -11,8 +11,14 @@ const onRequest = (request, response) => {
     case '/':
       htmlHandler.getIndex(request, response);
       break;
-    case '/party.mp4':
+    case '/party':
       mediaHandler.getParty(request, response);
+      break;
+    case '/bling':
+      mediaHandler.getBling(request, response);
+      break;
+    case '/bird':
+      mediaHandler.getBird(request, response);
       break;
     default:
       htmlHandler.getIndex(request, response);

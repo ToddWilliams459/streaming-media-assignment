@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const getParty = (request, response) => {
-  const file = path.resolve(__dirname, '../client/party.mp4');
 
+function loadFile(request, response, file) {
   fs.stat(file, (err, stats) => {
     if (err) {
       if (err.code === 'ENOENT') {
@@ -50,6 +49,21 @@ const getParty = (request, response) => {
 
     return stream;
   });
+}
+
+const getParty = (request, response) => {
+  const file = path.resolve(__dirname, '../client/party.mp4');
+  loadFile(request, response, file);
 };
+
+const getBling = (request, response) => {
+  const file = path.resolve(__dirname, '../client/bling.mp3');
+  loadFile(request, response, file);
+}
+
+const getBird = (request, response) => {
+  const file = path.resolve(__dirname, '../client/bird.mp4');
+  loadFile(request, response, file);
+}
 
 module.exports.getParty = getParty;
